@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majlis Perkahwinan Syarif & Asma</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#f8fbff,#d9ecff);
+    color:#1f3b5b;
+}
+.container{
+    max-width:700px;
+    margin:30px auto;
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+h1,h2{text-align:center;}
+.badge{
+    text-align:center;
+    background:#e8f3ff;
+    padding:10px;
+    border-radius:12px;
+    margin:15px 0;
+}
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+input,button{
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #b8d5f1;
+    font-size:16px;
+}
+button{
+    background:#3b82f6;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+button:hover{
+    background:#2563eb;
+}
+.note{
+    font-size:14px;
+    color:#666;
+    margin-top:20px;
+}
+.success{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    background:#d1fae5;
+    color:#065f46;
+    border-radius:10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>💍 Majlis Perkahwinan</h1>
+    <h2>Syarif & Asma</h2>
+
+    <div class="badge">📅 26 November 2026</div>
+    <div class="badge">📍 Pontian, Johor</div>
+    <div class="badge">🕒 11:00 pagi – 4:00 petang</div>
+
+    <h2>Daftar Kehadiran</h2>
+
+    <form id="rsvpForm">
+        <input type="text" id="nama" placeholder="Nama penuh" required>
+        <input type="number" id="jumlah" placeholder="Bilangan tetamu" min="1" value="1" required>
+        <button type="submit">Hantar</button>
+    </form>
+
+    <div class="success" id="successMsg">
+        Terima kasih! Kehadiran anda telah direkodkan.
+    </div>
+
+    <p class="note">
+        Nota: Versi ini hanya menyimpan data dalam pelayar anda.
+        Untuk melihat jumlah tetamu daripada semua orang yang mendaftar,
+        sambungkan borang ini ke Google Sheets atau Firebase.
+    </p>
+</div>
+
+<script>
+document.getElementById('rsvpForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const nama = document.getElementById('nama').value;
+    const jumlah = document.getElementById('jumlah').value;
+
+    let data = JSON.parse(localStorage.getItem('rsvpList')) || [];
+    data.push({nama,jumlah,masa:new Date().toLocaleString()});
+    localStorage.setItem('rsvpList', JSON.stringify(data));
+
+    document.getElementById('successMsg').style.display='block';
+    this.reset();
+});
+</script>
+</body>
+</html>
